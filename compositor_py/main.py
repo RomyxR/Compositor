@@ -5,7 +5,7 @@ ProjectWindowBridge.swift: assembles the canvas viewport, tool options bar,
 layers panel and status bar, wires up all menus / keyboard shortcuts and the
 project open/save/export actions.
 
-Run with:  python -m compositor_py   (or python compositor_py/main.py)
+Run with:  python -m compositor_py   (or double-click / `python main.py`)
 """
 from __future__ import annotations
 
@@ -18,6 +18,23 @@ from PyQt6.QtGui import QColor, QKeySequence
 from PyQt6.QtWidgets import (QApplication, QFileDialog, QHBoxLayout, QLabel,
                              QMainWindow, QMessageBox, QScrollArea, QSizePolicy,
                              QToolBar, QVBoxLayout, QWidget)
+
+# --- support both "python -m compositor_py" and direct "python main.py" ----
+if __package__ in (None, ""):
+    # Running as a plain script (e.g. `python main.py` or double-click).
+    # Re-launch the same interpreter as `python -m compositor_py` so that
+    # all relative imports inside the package work correctly, no matter how
+    # the folder is named or where it lives.
+    _HERE = os.path.dirname(os.path.abspath(__file__))          # .../compositor_py
+    _PARENT = os.path.dirname(_HERE)                            # project root
+    if os.path.basename(_HERE).lower() == "__pycache__":        # copied out of pyc
+        sys.exit("Run the original main.py, not a file inside __pycache__.")
+    _PKG = os.path.basename(_HERE)
+    _code = ("import sys; sys.path.insert(0, %r); "
+             "from %s.main import main; sys.exit(main())" % (_PARENT, _PKG))
+    os.execv(sys.executable, [sys.executable, "-c", _code] + sys.argv[1:])
+    # (unreachable unless exec fails)
+    raise RuntimeError("failed to restart as package")
 
 from .core.model import AdjustmentKind, NavigationTool
 from .core.session import EditorSession

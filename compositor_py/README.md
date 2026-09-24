@@ -32,6 +32,14 @@ python -m compositor_py                 # обычный запуск
 python -m compositor_py my.compositor   # открыть проект
 ```
 
+Можно также запустить скрипт напрямую — он сам перезапустится в режиме
+пакета, так что `ImportError: attempted relative import...` больше не будет:
+
+```bash
+python compositor_py/main.py            # из корня репозитория
+cd compositor_py && python main.py      # или из папки пакета (в т.ч. двойной щелчок по main.py)
+```
+
 Или установите пакет один раз (создаст команду `compositor`):
 
 ```bash
