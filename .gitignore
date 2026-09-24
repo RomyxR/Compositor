@@ -1,15 +1,1 @@
-# Compiled Python bytecode
-__pycache__/
-*.pyc
-
-# Environment and dependencies
-.env
-.venv/
-venv/
-
-# Editor/IDE files
-.vscode/
-.idea/
-
-# System files
-.DS_Store
+(empty)

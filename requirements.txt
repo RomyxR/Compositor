@@ -1,0 +1,6 @@
+numpy>=1.24
+Pillow>=10.0
+PyQt6>=6.5
+# Optional extras:
+# pillow-heif   # HEIC import
+# scipy         # faster convolution (a built-in numpy fallback is used otherwise)

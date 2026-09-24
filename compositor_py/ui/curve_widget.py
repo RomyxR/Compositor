@@ -27,10 +27,8 @@ class CurveEditor(QWidget):
         return (round(x, 3), round(y, 3))
 
     def settings(self) -> CurvesSettings:
-        pts = [p for p in self.points if not (p == (0, 0) and len(self.points) > 2
-                                              and p == self.points[0]) ]
         interior = [p for p in self.points if p not in ((0.0, 0.0), (1.0, 1.0))]
-        return CurvesSettings(rgb_points=self.points if interior else [])
+        return CurvesSettings(rgb_points=list(self.points) if interior else [])
 
     def paintEvent(self, ev):
         p = QPainter(self)

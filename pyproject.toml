@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "compositor-py"
+version = "1.0.0"
+description = "Compositor — layered raster image editor (Python/Qt port of the Swift app)"
+requires-python = ">=3.9"
+dependencies = [
+    "numpy>=1.24",
+    "Pillow>=10.0",
+    "PyQt6>=6.5",
+]
+
+[project.optional-dependencies]
+heic = ["pillow-heif"]
+scipy = ["scipy"]
+
+[project.gui-scripts]
+compositor = "compositor_py.main:main"
+
+[tool.setuptools.packages.find]
+include = ["compositor_py*"]
